@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: 2010-09-09
+#Para temas de version
+Description: Template para la creación de una maquina EC2 y su respectivo security group
+
+Parameters: 
+    CidrBlock:
+      Type: String
+      Default: 172.31.0.0/16
+      Description: Segmento de red para VPC
+    CidrBlockSubnet:
+      Type:String
+      Default: 10.10.0.0/24
+      Description: Segmento para la subnet
+Resources:
+    MyVPC:
+      Type: AWS::EC2::VPC
+      Properties: 
+        CidrBlock: !Ref CidrBlock
+        EnableDnsSupport: false
+        EnableDnsHostnames: false
+        Tags:
+        - Key: Name
+          Value: "MIVPC"     
+    MySubnet:
+      Type: AWS::EC2::Subnet
+      Properties:
+        AssignIpv6AddressOnCreation: false
+        CidrBlock: !Ref CidrBlockSubnet
+        Ipv6CidrBlock: false
+        Tags:
+        - Key: Name
+          Value: "MiSubnet"
+        VpcId: !Ref MyVPC       
